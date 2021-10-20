@@ -27,8 +27,8 @@ build: ../makefile
 	$(MAKE) -C "../"
 
 clean:$(TESTBUILDDIR) $(TESTBINDIR)
-	rmdir $(TESTBUILDDIR) /Q /S
-	rmdir $(TESTBINDIR) /Q /S
+	rm -r $(TESTBUILDDIR)
+	rm -r $(TESTBINDIR)
 	mkdir $(TESTBUILDDIR)
 	mkdir $(TESTBINDIR)
 

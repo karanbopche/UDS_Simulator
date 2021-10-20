@@ -19,7 +19,7 @@ all: $(OBJECTS)
 
 # build spikes and run.
 $(SPIKEOBJFILES):%.o: $(SPIKEDIR)/%.cpp $(OBJECTS)
-	@if not exist $(SPIKEDIR)\$(BUILDDIR) mkdir $(SPIKEDIR)\$(BUILDDIR)
+	@if not exist $(SPIKEDIR)/$(BUILDDIR) mkdir $(SPIKEDIR)/$(BUILDDIR)
 	$(CC) $(CFLAGS) $(INCLUDE) $< -o $(SPIKEDIR)/$(BUILDDIR)/$@
 	$(CC) $(SPIKEDIR)/$(BUILDDIR)/$@ $(OBJECTS) -o $(@:%.o=$(TARGET)/%.exe) $(LIB)
 	@echo "running spike "
@@ -28,13 +28,13 @@ $(SPIKEOBJFILES):%.o: $(SPIKEDIR)/%.cpp $(OBJECTS)
 
 #create object files.
 $(OBJECTS):$(BUILDDIR)%.o: $(SRCDIR)%.cpp
-	@if not exist $(subst /,\, $(dir $@)) mkdir $(subst /,\, $(dir $@))
+	@if not $(dir $@) mkdir $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDE) $< -o $@
 
 clean: $(BUILDDIR) $(TARGET)
 	@echo "Cleaning..."
-	rmdir $(TARGET) /Q /S
-	rmdir $(BUILDDIR) /Q /S
+	rm -r $(TARGET) 
+	rm -r $(BUILDDIR)
 	mkdir $(BUILDDIR)
 	mkdir $(TARGET)
 

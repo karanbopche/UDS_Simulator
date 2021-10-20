@@ -4,3 +4,6 @@
 /tests/TestBin
 /tests/TestBuild
 /spike/build
+/CMakeFiles
+/.vscode
+/CMakeCache.txt
