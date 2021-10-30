@@ -48,7 +48,7 @@ public:
   };
   explicit Response(std::string response);
   static Response createNegative(int serviceNumber, NRC nrc);
-  static Response createPositive(int serviceNumber, std::string params);
+  static Response createPositive(int serviceNumber, std::string params="");
   static Response createPositive(int serviceNumber, std::vector<uint8_t> params);
   std::string toString();
   inline bool isPositive(){return this->response[0]!=0x7F;}
