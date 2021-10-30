@@ -2,55 +2,60 @@ CC := g++
 LIB := -pthread
 SRCDIR := src
 BUILDDIR  := build
-TARGET := bin
+TESTDIR := tests
+BINDIR := bin
 SPIKEDIR := spike
 CFLAGS := -g -Wall -c
 INCLUDE := -I includes
 
 rwildcard = $(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
-SOURCES := $(call rwildcard, src, *.cpp)
+SOURCES := $(call rwildcard, $(SRCDIR), *.cpp)
 OBJECTS := $(SOURCES:$(SRCDIR)/%.cpp=$(BUILDDIR)/%.o)
 
-SPIKECPPFILES := $(wildcard $(SPIKEDIR)/*.cpp)
-SPIKEOBJFILES := $(SPIKECPPFILES:$(SPIKEDIR)/%.cpp=%.o)
+TESTS := $(call rwildcard, $(TESTDIR), *.cpp)
+TESTOBJECTS := $(TESTS:$(TESTDIR)/%.cpp=%.o)
+
+SPIKES := $(wildcard $(SPIKEDIR)/*.cpp)
+SPIKEOBJECTS := $(SPIKES:$(SPIKEDIR)/%.cpp=%.o)
+
 
 all: $(OBJECTS)
-	@echo "creating object files"
+	@echo "object files created."
 
 # build spikes and run.
-$(SPIKEOBJFILES):%.o: $(SPIKEDIR)/%.cpp $(OBJECTS)
-	@if not exist $(SPIKEDIR)/$(BUILDDIR) mkdir $(SPIKEDIR)/$(BUILDDIR)
-	$(CC) $(CFLAGS) $(INCLUDE) $< -o $(SPIKEDIR)/$(BUILDDIR)/$@
-	$(CC) $(SPIKEDIR)/$(BUILDDIR)/$@ $(OBJECTS) -o $(@:%.o=$(TARGET)/%.exe) $(LIB)
+$(SPIKEOBJECTS):%.o: $(SPIKEDIR)/%.cpp $(OBJECTS)
+	$(CC) $(CFLAGS) $(INCLUDE) $< -o $(BUILDDIR)/$@
+	$(CC) $(BUILDDIR)/$@ $(OBJECTS) -o $(@:%.o=$(BINDIR)/%.exe) $(LIB)
 	@echo "running spike "
-	@$(@:%.o=$(TARGET)/%.exe)
+	@$(@:%.o=$(BINDIR)/%.exe)
 
+# build tests and run.
+$(TESTOBJECTS):%.o: $(TESTDIR)/%.cpp $(OBJECTS) $(BUILDDIR)/TestCase.o
+	$(CC) $(CFLAGS) $(INCLUDE) $< -o $(BUILDDIR)/$@
+	$(CC) $(BUILDDIR)/$@ $(BUILDDIR)/TestCase.o $(OBJECTS) -o $(@:%.o=$(BINDIR)/%.exe) $(LIB)
+	@echo "running tests"
+	@$(@:%.o=$(BINDIR)/%.exe)
+
+$(BUILDDIR)/TestCase.o: $(TESTDIR)/TestCase.cpp
+	$(CC) $(CFLAGS) $(INCLUDE) $< -o $@
 
 #create object files.
 $(OBJECTS):$(BUILDDIR)%.o: $(SRCDIR)%.cpp
-	@if not $(dir $@) mkdir $(dir $@)
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDE) $< -o $@
 
-clean: $(BUILDDIR) $(TARGET)
+clean:
 	@echo "Cleaning..."
-	rm -r $(TARGET) 
-	rm -r $(BUILDDIR)
+	rm -r -f $(BINDIR) 
+	rm -r -f $(BUILDDIR)
 	mkdir $(BUILDDIR)
-	mkdir $(TARGET)
-
-# in case if folders are not present create them first.
-$(BUILDDIR):
-	mkdir $(BUILDDIR)
-
-$(TARGET):
-	mkdir $(TARGET)
+	mkdir $(BINDIR)
 
 # tests
 test:
 	$(MAKE) -C "tests/"
 
-# spikes
-ticket:
-	$(CC) $(CFLAGS) spikes/ticket.cpp $(INC) $(LIB) -o bin/ticket
-
 .PHONY: clean
+
+debug:
+	@echo $(SPIKEOBJECTS)
