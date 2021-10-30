@@ -51,10 +51,6 @@ clean:
 	mkdir $(BUILDDIR)
 	mkdir $(BINDIR)
 
-# tests
-test:
-	$(MAKE) -C "tests/"
-
 .PHONY: clean
 
 debug:
