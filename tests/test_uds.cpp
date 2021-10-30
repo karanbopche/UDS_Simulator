@@ -1,7 +1,7 @@
 #include "testCase.h"
-#include "Uds/uds.h"
 #include "Vehicle/BaseVehicle.h"
 #include "Uds/Services/Service10.h"
+#include "Uds/Uds.h"
 
 bool test_uds(){
   Uds uds(std::make_shared<BaseVehicle>());
@@ -10,7 +10,6 @@ bool test_uds(){
   assertCompare("7F1010", uds.execute(Request("1003")).toString());
   return true;
 }
-
 
 void startTests(){
   TC_message("Testing UDS class");
