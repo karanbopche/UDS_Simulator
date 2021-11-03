@@ -19,6 +19,7 @@ void Uds::unRegisterService(std::shared_ptr<BaseService> service){
 }
 
 Response Uds::execute(Request command){
+  if(!this->vehicle->isOn()) return Response("");
   if(services.find(command.getServiceId()) != services.end()){
     return services[command.getServiceId()]->execute(command);
   }

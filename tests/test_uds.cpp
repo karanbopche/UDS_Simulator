@@ -7,8 +7,11 @@ bool test_uds(){
   Uds uds(std::make_shared<BaseVehicle>());
   assertCompare("7F1011", uds.execute(Request("1003")).toString());
   uds.registerService(std::make_shared<Service10>());
-  assertCompare("7F1010", uds.execute(Request("1003")).toString());
+  assertCompare("5003", uds.execute(Request("1003")).toString());
+  
+
   return true;
+
 }
 
 void startTests(){

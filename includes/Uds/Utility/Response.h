@@ -46,12 +46,17 @@ public:
     voltageTooHigh=0x92,
     voltageTooLow=0x93,
   };
-  explicit Response(std::string response);
+
+  Response(){}
+  Response(std::string response);
   static Response createNegative(int serviceNumber, NRC nrc);
   static Response createPositive(int serviceNumber, std::string params="");
-  static Response createPositive(int serviceNumber, std::vector<uint8_t> params);
-  std::string toString();
+  static Response createPositive(int serviceNumber, const std::vector<uint8_t>& params);
+
+  std::string toString(){return Convert::vectorToHexString(this->response);}
+  bool operator==(std::string rhs){return rhs == Convert::vectorToHexString(response);}
   inline bool isPositive(){return this->response[0]!=0x7F;}
+
 protected:
   std::vector<uint8_t> response;
 };

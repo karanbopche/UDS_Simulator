@@ -18,7 +18,6 @@ TESTOBJECTS := $(TESTS:$(TESTDIR)/%.cpp=%.o)
 SPIKES := $(wildcard $(SPIKEDIR)/*.cpp)
 SPIKEOBJECTS := $(SPIKES:$(SPIKEDIR)/%.cpp=%.o)
 
-
 all: $(OBJECTS)
 	@echo "object files created."
 
@@ -41,7 +40,7 @@ $(BUILDDIR)/TestCase.o: $(TESTDIR)/TestCase.cpp
 
 #create object files.
 $(OBJECTS):$(BUILDDIR)%.o: $(SRCDIR)%.cpp
-	mkdir -p $(dir $@)
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDE) $< -o $@
 
 clean:
