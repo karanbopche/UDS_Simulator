@@ -1,5 +1,5 @@
 #include "Uds/Utility/Convert.h"
-#include "testCase.h"
+#include "testFramework/testCase.h"
 
 bool test_Convert(){
   assertCompare(std::string("33"), Convert::hexToString(0x33));
