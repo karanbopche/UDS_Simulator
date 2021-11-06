@@ -15,6 +15,7 @@ public:
   inline uint8_t& operator[] (int index){return this->params[index];}
   inline size_t paramLength(){return this->params.size();}
 
+
 private:
   inline std::vector<uint8_t> hexStringToVector(std::string data);
   inline int hexStringToInt(std::string data);
