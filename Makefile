@@ -67,6 +67,17 @@ rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+
+.PHONY : test/fast
+
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -123,6 +134,19 @@ UDS_Interacive/fast:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/build
 .PHONY : UDS_Interacive/fast
 
+#=============================================================================
+# Target rules for targets named test1
+
+# Build rule for target.
+test1: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test1
+.PHONY : test1
+
+# fast build rule for target.
+test1/fast:
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/build
+.PHONY : test1/fast
+
 spike/InteractiveMain.o: spike/InteractiveMain.cpp.o
 
 .PHONY : spike/InteractiveMain.o
@@ -157,6 +181,7 @@ src/Uds/Services/BaseService.o: src/Uds/Services/BaseService.cpp.o
 # target to build an object file
 src/Uds/Services/BaseService.cpp.o:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Uds/Services/BaseService.cpp.o
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Uds/Services/BaseService.cpp.o
 .PHONY : src/Uds/Services/BaseService.cpp.o
 
 src/Uds/Services/BaseService.i: src/Uds/Services/BaseService.cpp.i
@@ -166,6 +191,7 @@ src/Uds/Services/BaseService.i: src/Uds/Services/BaseService.cpp.i
 # target to preprocess a source file
 src/Uds/Services/BaseService.cpp.i:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Uds/Services/BaseService.cpp.i
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Uds/Services/BaseService.cpp.i
 .PHONY : src/Uds/Services/BaseService.cpp.i
 
 src/Uds/Services/BaseService.s: src/Uds/Services/BaseService.cpp.s
@@ -175,6 +201,7 @@ src/Uds/Services/BaseService.s: src/Uds/Services/BaseService.cpp.s
 # target to generate assembly for a file
 src/Uds/Services/BaseService.cpp.s:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Uds/Services/BaseService.cpp.s
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Uds/Services/BaseService.cpp.s
 .PHONY : src/Uds/Services/BaseService.cpp.s
 
 src/Uds/Services/Service10.o: src/Uds/Services/Service10.cpp.o
@@ -184,6 +211,7 @@ src/Uds/Services/Service10.o: src/Uds/Services/Service10.cpp.o
 # target to build an object file
 src/Uds/Services/Service10.cpp.o:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Uds/Services/Service10.cpp.o
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Uds/Services/Service10.cpp.o
 .PHONY : src/Uds/Services/Service10.cpp.o
 
 src/Uds/Services/Service10.i: src/Uds/Services/Service10.cpp.i
@@ -193,6 +221,7 @@ src/Uds/Services/Service10.i: src/Uds/Services/Service10.cpp.i
 # target to preprocess a source file
 src/Uds/Services/Service10.cpp.i:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Uds/Services/Service10.cpp.i
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Uds/Services/Service10.cpp.i
 .PHONY : src/Uds/Services/Service10.cpp.i
 
 src/Uds/Services/Service10.s: src/Uds/Services/Service10.cpp.s
@@ -202,6 +231,7 @@ src/Uds/Services/Service10.s: src/Uds/Services/Service10.cpp.s
 # target to generate assembly for a file
 src/Uds/Services/Service10.cpp.s:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Uds/Services/Service10.cpp.s
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Uds/Services/Service10.cpp.s
 .PHONY : src/Uds/Services/Service10.cpp.s
 
 src/Uds/Services/Service3E.o: src/Uds/Services/Service3E.cpp.o
@@ -211,6 +241,7 @@ src/Uds/Services/Service3E.o: src/Uds/Services/Service3E.cpp.o
 # target to build an object file
 src/Uds/Services/Service3E.cpp.o:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Uds/Services/Service3E.cpp.o
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Uds/Services/Service3E.cpp.o
 .PHONY : src/Uds/Services/Service3E.cpp.o
 
 src/Uds/Services/Service3E.i: src/Uds/Services/Service3E.cpp.i
@@ -220,6 +251,7 @@ src/Uds/Services/Service3E.i: src/Uds/Services/Service3E.cpp.i
 # target to preprocess a source file
 src/Uds/Services/Service3E.cpp.i:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Uds/Services/Service3E.cpp.i
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Uds/Services/Service3E.cpp.i
 .PHONY : src/Uds/Services/Service3E.cpp.i
 
 src/Uds/Services/Service3E.s: src/Uds/Services/Service3E.cpp.s
@@ -229,6 +261,7 @@ src/Uds/Services/Service3E.s: src/Uds/Services/Service3E.cpp.s
 # target to generate assembly for a file
 src/Uds/Services/Service3E.cpp.s:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Uds/Services/Service3E.cpp.s
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Uds/Services/Service3E.cpp.s
 .PHONY : src/Uds/Services/Service3E.cpp.s
 
 src/Uds/Uds.o: src/Uds/Uds.cpp.o
@@ -238,6 +271,7 @@ src/Uds/Uds.o: src/Uds/Uds.cpp.o
 # target to build an object file
 src/Uds/Uds.cpp.o:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Uds/Uds.cpp.o
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Uds/Uds.cpp.o
 .PHONY : src/Uds/Uds.cpp.o
 
 src/Uds/Uds.i: src/Uds/Uds.cpp.i
@@ -247,6 +281,7 @@ src/Uds/Uds.i: src/Uds/Uds.cpp.i
 # target to preprocess a source file
 src/Uds/Uds.cpp.i:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Uds/Uds.cpp.i
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Uds/Uds.cpp.i
 .PHONY : src/Uds/Uds.cpp.i
 
 src/Uds/Uds.s: src/Uds/Uds.cpp.s
@@ -256,6 +291,7 @@ src/Uds/Uds.s: src/Uds/Uds.cpp.s
 # target to generate assembly for a file
 src/Uds/Uds.cpp.s:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Uds/Uds.cpp.s
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Uds/Uds.cpp.s
 .PHONY : src/Uds/Uds.cpp.s
 
 src/Uds/Utility/Convert.o: src/Uds/Utility/Convert.cpp.o
@@ -265,6 +301,7 @@ src/Uds/Utility/Convert.o: src/Uds/Utility/Convert.cpp.o
 # target to build an object file
 src/Uds/Utility/Convert.cpp.o:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Uds/Utility/Convert.cpp.o
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Uds/Utility/Convert.cpp.o
 .PHONY : src/Uds/Utility/Convert.cpp.o
 
 src/Uds/Utility/Convert.i: src/Uds/Utility/Convert.cpp.i
@@ -274,6 +311,7 @@ src/Uds/Utility/Convert.i: src/Uds/Utility/Convert.cpp.i
 # target to preprocess a source file
 src/Uds/Utility/Convert.cpp.i:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Uds/Utility/Convert.cpp.i
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Uds/Utility/Convert.cpp.i
 .PHONY : src/Uds/Utility/Convert.cpp.i
 
 src/Uds/Utility/Convert.s: src/Uds/Utility/Convert.cpp.s
@@ -283,6 +321,7 @@ src/Uds/Utility/Convert.s: src/Uds/Utility/Convert.cpp.s
 # target to generate assembly for a file
 src/Uds/Utility/Convert.cpp.s:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Uds/Utility/Convert.cpp.s
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Uds/Utility/Convert.cpp.s
 .PHONY : src/Uds/Utility/Convert.cpp.s
 
 src/Uds/Utility/Request.o: src/Uds/Utility/Request.cpp.o
@@ -292,6 +331,7 @@ src/Uds/Utility/Request.o: src/Uds/Utility/Request.cpp.o
 # target to build an object file
 src/Uds/Utility/Request.cpp.o:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Uds/Utility/Request.cpp.o
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Uds/Utility/Request.cpp.o
 .PHONY : src/Uds/Utility/Request.cpp.o
 
 src/Uds/Utility/Request.i: src/Uds/Utility/Request.cpp.i
@@ -301,6 +341,7 @@ src/Uds/Utility/Request.i: src/Uds/Utility/Request.cpp.i
 # target to preprocess a source file
 src/Uds/Utility/Request.cpp.i:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Uds/Utility/Request.cpp.i
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Uds/Utility/Request.cpp.i
 .PHONY : src/Uds/Utility/Request.cpp.i
 
 src/Uds/Utility/Request.s: src/Uds/Utility/Request.cpp.s
@@ -310,6 +351,7 @@ src/Uds/Utility/Request.s: src/Uds/Utility/Request.cpp.s
 # target to generate assembly for a file
 src/Uds/Utility/Request.cpp.s:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Uds/Utility/Request.cpp.s
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Uds/Utility/Request.cpp.s
 .PHONY : src/Uds/Utility/Request.cpp.s
 
 src/Uds/Utility/Response.o: src/Uds/Utility/Response.cpp.o
@@ -319,6 +361,7 @@ src/Uds/Utility/Response.o: src/Uds/Utility/Response.cpp.o
 # target to build an object file
 src/Uds/Utility/Response.cpp.o:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Uds/Utility/Response.cpp.o
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Uds/Utility/Response.cpp.o
 .PHONY : src/Uds/Utility/Response.cpp.o
 
 src/Uds/Utility/Response.i: src/Uds/Utility/Response.cpp.i
@@ -328,6 +371,7 @@ src/Uds/Utility/Response.i: src/Uds/Utility/Response.cpp.i
 # target to preprocess a source file
 src/Uds/Utility/Response.cpp.i:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Uds/Utility/Response.cpp.i
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Uds/Utility/Response.cpp.i
 .PHONY : src/Uds/Utility/Response.cpp.i
 
 src/Uds/Utility/Response.s: src/Uds/Utility/Response.cpp.s
@@ -337,6 +381,7 @@ src/Uds/Utility/Response.s: src/Uds/Utility/Response.cpp.s
 # target to generate assembly for a file
 src/Uds/Utility/Response.cpp.s:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Uds/Utility/Response.cpp.s
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Uds/Utility/Response.cpp.s
 .PHONY : src/Uds/Utility/Response.cpp.s
 
 src/Vehicle/BaseVehicle.o: src/Vehicle/BaseVehicle.cpp.o
@@ -346,6 +391,7 @@ src/Vehicle/BaseVehicle.o: src/Vehicle/BaseVehicle.cpp.o
 # target to build an object file
 src/Vehicle/BaseVehicle.cpp.o:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Vehicle/BaseVehicle.cpp.o
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Vehicle/BaseVehicle.cpp.o
 .PHONY : src/Vehicle/BaseVehicle.cpp.o
 
 src/Vehicle/BaseVehicle.i: src/Vehicle/BaseVehicle.cpp.i
@@ -355,6 +401,7 @@ src/Vehicle/BaseVehicle.i: src/Vehicle/BaseVehicle.cpp.i
 # target to preprocess a source file
 src/Vehicle/BaseVehicle.cpp.i:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Vehicle/BaseVehicle.cpp.i
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Vehicle/BaseVehicle.cpp.i
 .PHONY : src/Vehicle/BaseVehicle.cpp.i
 
 src/Vehicle/BaseVehicle.s: src/Vehicle/BaseVehicle.cpp.s
@@ -364,7 +411,35 @@ src/Vehicle/BaseVehicle.s: src/Vehicle/BaseVehicle.cpp.s
 # target to generate assembly for a file
 src/Vehicle/BaseVehicle.cpp.s:
 	$(MAKE) -f CMakeFiles/UDS_Interacive.dir/build.make CMakeFiles/UDS_Interacive.dir/src/Vehicle/BaseVehicle.cpp.s
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/Vehicle/BaseVehicle.cpp.s
 .PHONY : src/Vehicle/BaseVehicle.cpp.s
+
+tests/test_converter.o: tests/test_converter.cpp.o
+
+.PHONY : tests/test_converter.o
+
+# target to build an object file
+tests/test_converter.cpp.o:
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/tests/test_converter.cpp.o
+.PHONY : tests/test_converter.cpp.o
+
+tests/test_converter.i: tests/test_converter.cpp.i
+
+.PHONY : tests/test_converter.i
+
+# target to preprocess a source file
+tests/test_converter.cpp.i:
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/tests/test_converter.cpp.i
+.PHONY : tests/test_converter.cpp.i
+
+tests/test_converter.s: tests/test_converter.cpp.s
+
+.PHONY : tests/test_converter.s
+
+# target to generate assembly for a file
+tests/test_converter.cpp.s:
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/tests/test_converter.cpp.s
+.PHONY : tests/test_converter.cpp.s
 
 # Help Target
 help:
@@ -373,8 +448,10 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
+	@echo "... test"
 	@echo "... UDS_Interacive"
 	@echo "... edit_cache"
+	@echo "... test1"
 	@echo "... spike/InteractiveMain.o"
 	@echo "... spike/InteractiveMain.i"
 	@echo "... spike/InteractiveMain.s"
@@ -402,6 +479,9 @@ help:
 	@echo "... src/Vehicle/BaseVehicle.o"
 	@echo "... src/Vehicle/BaseVehicle.i"
 	@echo "... src/Vehicle/BaseVehicle.s"
+	@echo "... tests/test_converter.o"
+	@echo "... tests/test_converter.i"
+	@echo "... tests/test_converter.s"
 .PHONY : help
 
 

@@ -1,0 +1,19 @@
+Start testing: Nov 06 10:24 IST
+----------------------------------------------------------
+Unable to find executable: test1
+1/1 Testing: TestConverter
+1/1 Test: TestConverter
+Command: "" "COMMAND" "test1"
+Directory: /home/pi/projects/cpp/Uds_Simulator
+"TestConverter" start time: 
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"TestConverter" end time: Nov 06 10:24 IST
+"TestConverter" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 06 10:24 IST
