@@ -7,3 +7,6 @@
 /CMakeFiles
 /.vscode
 /CMakeCache.txt
+/docs
+/Testing
+
