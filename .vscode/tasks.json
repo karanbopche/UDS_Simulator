@@ -1,0 +1,45 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "cmake Generate",
+            "type": "shell",
+            "command": "cmake -B build -G \"MinGW Makefiles\" -DCMAKE_BUILD_TYPE=Debug"
+        },
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "cmake --build build --config Debug --parallel 10"
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "cmake --build build --target clean"
+        },
+        {
+            "label": "build and Run",
+            "type": "shell",
+            "dependsOn": "build",
+            "command": "${workspaceFolder}/build/bin/UDS_Emulator.exe",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Run",
+            "type": "shell",
+            "command": "${workspaceFolder}\\build\\bin\\UDS_Emulator.exe"
+        },
+        {
+            "label": "test Run",
+            "type": "shell",
+            "command": "${workspaceFolder}/build/bin/UNIT_TESTS.exe",
+            "args": [
+                "--gtest_also_run_disabled_tests"
+            ]
+        }
+    ]
+}
