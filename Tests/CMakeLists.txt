@@ -14,7 +14,7 @@ target_link_libraries(
     UNIT_TESTS
     GTest::gtest_main
     GTest::gmock_main
-    UDSLib
+    UdsLib
 )
 
 target_include_directories(

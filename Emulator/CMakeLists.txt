@@ -12,7 +12,7 @@ add_executable(
 
 target_link_libraries(
     UDS_Emulator
-    UDSLib
+    UdsLib
 )
 
 target_include_directories(
