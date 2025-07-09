@@ -49,4 +49,7 @@ build
 # External projects
 *-prefix/
 
+# python venv
+.venv
+
 # End of https://www.toptal.com/developers/gitignore/api/cmake,c++

@@ -1,0 +1,24 @@
+repos:
+- repo: https://github.com/pre-commit/mirrors-clang-format
+  rev: v13.0.1
+  hooks:
+  - id: clang-format
+    name: format C code
+    types_or: [c++, c]
+    additional_dependencies: [--trusted-host, pypi.org, --trusted-host, pypi.python.org, --trusted-host, files.pythonhosted.org]
+    exclude: |
+      (?x)^(
+      )$
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.1.0
+  hooks:
+  - id: check-merge-conflict
+    additional_dependencies: [--trusted-host, pypi.org, --trusted-host, pypi.python.org, --trusted-host, files.pythonhosted.org]
+  - id: end-of-file-fixer
+    additional_dependencies: [--trusted-host, pypi.org, --trusted-host, pypi.python.org, --trusted-host, files.pythonhosted.org]
+  - id: trailing-whitespace
+    additional_dependencies: [--trusted-host, pypi.org, --trusted-host, pypi.python.org, --trusted-host, files.pythonhosted.org]
+  - id: check-shebang-scripts-are-executable
+    additional_dependencies: [--trusted-host, pypi.org, --trusted-host, pypi.python.org, --trusted-host, files.pythonhosted.org]
+  - id: check-executables-have-shebangs
+    additional_dependencies: [--trusted-host, pypi.org, --trusted-host, pypi.python.org, --trusted-host, files.pythonhosted.org]

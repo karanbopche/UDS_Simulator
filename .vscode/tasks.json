@@ -6,39 +6,94 @@
         {
             "label": "cmake Generate",
             "type": "shell",
-            "command": "cmake -B build -G \"MinGW Makefiles\" -DCMAKE_BUILD_TYPE=Debug"
+            "problemMatcher": [],
+            "command": "cmake -B build -G \"${input:Configuration}\" -DCMAKE_BUILD_TYPE=${input:BuildType}"
         },
         {
             "label": "build",
             "type": "shell",
+            "problemMatcher": [],
             "command": "cmake --build build --config Debug --parallel 10"
         },
         {
-            "label": "clean",
-            "type": "shell",
-            "command": "cmake --build build --target clean"
-        },
-        {
-            "label": "build and Run",
+            "label": "test",
             "type": "shell",
             "dependsOn": "build",
-            "command": "${workspaceFolder}/build/bin/UDS_Emulator.exe",
+            "command": "ctest",
+            "problemMatcher": [],
+            "args": [
+                "--output-on-failure"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
             "group": {
                 "kind": "build",
                 "isDefault": true
             }
         },
         {
-            "label": "Run",
+            "label": "clean",
             "type": "shell",
-            "command": "${workspaceFolder}\\build\\bin\\UDS_Emulator.exe"
+            "problemMatcher": [],
+            "command": "cmake --build build --target clean"
+        }
+    ],
+    "inputs": [
+        {
+            "id": "BuildType",
+            "type": "pickString",
+            "description": "Build type",
+            "options": [
+                "Debug",
+                "Release",
+                "RelWithDebInfo",
+                "MinSizeRel"
+            ]
         },
         {
-            "label": "test Run",
-            "type": "shell",
-            "command": "${workspaceFolder}/build/bin/UNIT_TESTS.exe",
-            "args": [
-                "--gtest_also_run_disabled_tests"
+            "id": "Configuration",
+            "type": "pickString",
+            "description": "Build Configuration",
+            "options": [
+                "MinGW Makefiles",
+                "Visual Studio 17 2022",
+                "Visual Studio 16 2019",
+                "Visual Studio 15 2017 [arch]",
+                "Visual Studio 14 2015 [arch]",
+                "Visual Studio 12 2013 [arch]",
+                "Visual Studio 11 2012 [arch]",
+                "Visual Studio 9 2008 [arch]",
+                "Borland Makefiles",
+                "NMake Makefiles",
+                "NMake Makefiles JOM",
+                "MSYS Makefiles",
+                "Green Hills MULTI",
+                "Unix Makefiles",
+                "Ninja",
+                "Ninja Multi-Config",
+                "Watcom WMake",
+                "CodeBlocks - MinGW Makefiles",
+                "CodeBlocks - NMake Makefiles",
+                "CodeBlocks - NMake Makefiles JOM",
+                "CodeBlocks - Ninja",
+                "CodeBlocks - Unix Makefiles",
+                "CodeLite - MinGW Makefiles",
+                "CodeLite - NMake Makefiles",
+                "CodeLite - Ninja",
+                "CodeLite - Unix Makefiles",
+                "Eclipse CDT4 - NMake Makefiles",
+                "Eclipse CDT4 - MinGW Makefiles",
+                "Eclipse CDT4 - Ninja",
+                "Eclipse CDT4 - Unix Makefiles",
+                "Kate - MinGW Makefiles",
+                "Kate - NMake Makefiles",
+                "Kate - Ninja",
+                "Kate - Unix Makefiles",
+                "Sublime Text 2 - MinGW Makefiles",
+                "Sublime Text 2 - NMake Makefiles",
+                "Sublime Text 2 - Ninja",
+                "Sublime Text 2 - Unix Makefiles"
             ]
         }
     ]

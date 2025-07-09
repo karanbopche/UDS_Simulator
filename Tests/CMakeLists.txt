@@ -1,27 +1,20 @@
-enable_testing()
+include(GoogleTest)
 
-set(
-    TEST_SOURCE
-    sanity_check.cpp
+set(TEST_FILES
+    Test_Service3E.cpp
+    Test_Service22.cpp
 )
 
 add_executable(
-    UNIT_TESTS
-    ${TEST_SOURCE}
+    UNIT_TEST
+    ${TEST_FILES}
 )
-
 target_link_libraries(
-    UNIT_TESTS
+    UNIT_TEST
     GTest::gtest_main
     GTest::gmock_main
+    UdsCfgLib
     UdsLib
 )
 
-target_include_directories(
-    UNIT_TESTS
-    PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}
-)
-
-include(GoogleTest)
-gtest_discover_tests(UNIT_TESTS)
+gtest_discover_tests(UNIT_TEST)
