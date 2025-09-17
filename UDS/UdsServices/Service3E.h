@@ -5,8 +5,10 @@
 extern "C" {
 #endif
 
-#include "UdsGateway_Configuration.h"
+#include "UdsServices/Service3E_Config.h"
+#include "UdsServices/Utils/Uds_Buffers.h"
 
+void Service3E_Init(Service3E_Config_T const *const config);
 void Service3E_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const respBuf);
 
 #ifdef __cplusplus

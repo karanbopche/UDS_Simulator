@@ -1,9 +1,14 @@
 
 
 #include "UdsServices/Service11.h"
+#include "UdsServices/Service11_Config.h"
+#include "UdsServices/Utils/Uds_Nrcs.h"
+
+static Service11_Config_T const *config;
+
+void Service11_Init(Service11_Config_T const *const newConfig) { config = newConfig; }
 
 void Service11_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const respBuf) {
-    Service11_Config_T const *const config = Uds_Gateway_Configurations.services.service11;
     if (config == NULL || (reqBuf->isFunctionalRequest && !config->isFunctionalAddressSupported)) {
         return Uds_Fill_Nrc(&respBuf->buffer, reqBuf->buffer.data[0], NRC_SERVICE_NOT_SUPPORTED);
     }
@@ -27,7 +32,6 @@ void Service11_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const 
 }
 
 void Service11_Post_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const respBuf) {
-    Service11_Config_T const *const config = Uds_Gateway_Configurations.services.service11;
     const uint8_t requestedSubFunc = Get_SubFunction(reqBuf->buffer.data[1]);
     for (uint16_t i = 0; i < config->supportedSubFunctionsListSize; i++) {
         if (requestedSubFunc == config->supportedSubFunctionsList[i].subFunctionId &&

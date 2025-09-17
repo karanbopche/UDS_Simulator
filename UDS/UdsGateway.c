@@ -13,97 +13,70 @@
 #include "UdsServices/Service37.h"
 #include "UdsServices/Service3E.h"
 #include "UdsServices/Service85.h"
-
-typedef struct StandardServiceConfig_Tag {
-    uint8_t serviceId;
-    Request_Handler_T serviceHandler;
-    Request_Handler_T postResponseHandler;
-} StandardServiceConfig_T;
+#include "UdsServices/Utils/Uds_Nrcs.h"
+#include "UdsServices/Utils/Uds_Services.h"
 
 static UDS_Request_T Uds_Request_Buffer;
 static UDS_Response_T Uds_Response_Buffer;
-static const StandardServiceConfig_T standardServicesList[] = {
-    {
-        .serviceId = SERVICE_ID_10,
-        .serviceHandler = Service10_Handler,
-        .postResponseHandler = NULL,
-    },
-    {
-        .serviceId = SERVICE_ID_11,
-        .serviceHandler = Service11_Handler,
-        .postResponseHandler = Service11_Post_Handler,
-    },
-    {
-        .serviceId = SERVICE_ID_22,
-        .serviceHandler = Service22_Handler,
-        .postResponseHandler = NULL,
-    },
-    {
-        .serviceId = SERVICE_ID_27,
-        .serviceHandler = Service27_Handler,
-        .postResponseHandler = NULL,
-    },
-    {
-        .serviceId = SERVICE_ID_28,
-        .serviceHandler = Service28_Handler,
-        .postResponseHandler = NULL,
-    },
-    {
-        .serviceId = SERVICE_ID_2E,
-        .serviceHandler = Service2E_Handler,
-        .postResponseHandler = NULL,
-    },
-    {
-        .serviceId = SERVICE_ID_3E,
-        .serviceHandler = Service3E_Handler,
-        .postResponseHandler = NULL,
-    },
-    {
-        .serviceId = SERVICE_ID_31,
-        .serviceHandler = Service31_Handler,
-        .postResponseHandler = Service31_Post_Handler,
-    },
-    {
-        .serviceId = SERVICE_ID_34,
-        .serviceHandler = Service34_Handler,
-        .postResponseHandler = NULL,
-    },
-    {
-        .serviceId = SERVICE_ID_36,
-        .serviceHandler = Service36_Handler,
-        .postResponseHandler = NULL,
-    },
-    {
-        .serviceId = SERVICE_ID_37,
-        .serviceHandler = Service37_Handler,
-        .postResponseHandler = NULL,
-    },
-    {
-        .serviceId = SERVICE_ID_85,
-        .serviceHandler = Service85_Handler,
-        .postResponseHandler = NULL,
-    },
-};
-
-static const uint8_t standardServicesListSize = sizeof(standardServicesList) / sizeof(standardServicesList[0]);
+static Uds_Config_T const *config;
 
 void Uds_Request_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const respBuf) {
     const uint8_t serviceId = reqBuf->buffer.data[0];
-    for (uint8_t i = 0; i < standardServicesListSize; i++) {
-        if (standardServicesList[i].serviceId == serviceId && standardServicesList[i].serviceHandler) {
-            return standardServicesList[i].serviceHandler(reqBuf, respBuf);
-        }
+    switch (serviceId) {
+    case SERVICE_ID_10:
+        Service10_Handler(reqBuf, respBuf);
+        break;
+    case SERVICE_ID_11:
+        Service11_Handler(reqBuf, respBuf);
+        break;
+    case SERVICE_ID_22:
+        Service22_Handler(reqBuf, respBuf);
+        break;
+    case SERVICE_ID_27:
+        Service27_Handler(reqBuf, respBuf);
+        break;
+    case SERVICE_ID_28:
+        Service28_Handler(reqBuf, respBuf);
+        break;
+    case SERVICE_ID_2E:
+        Service2E_Handler(reqBuf, respBuf);
+        break;
+    case SERVICE_ID_31:
+        Service31_Handler(reqBuf, respBuf);
+        break;
+    case SERVICE_ID_34:
+        Service34_Handler(reqBuf, respBuf);
+        break;
+    case SERVICE_ID_36:
+        Service36_Handler(reqBuf, respBuf);
+        break;
+    case SERVICE_ID_37:
+        Service37_Handler(reqBuf, respBuf);
+        break;
+    case SERVICE_ID_3E:
+        Service3E_Handler(reqBuf, respBuf);
+        break;
+    case SERVICE_ID_85:
+        Service85_Handler(reqBuf, respBuf);
+        break;
+
+    default:
+        Uds_Fill_Nrc(&respBuf->buffer, serviceId, NRC_SERVICE_NOT_SUPPORTED);
     }
-    Uds_Fill_Nrc(&respBuf->buffer, serviceId, NRC_SERVICE_NOT_SUPPORTED);
     return;
 }
 
 void Uds_Request_Post_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const respBuf) {
     const uint8_t serviceId = reqBuf->buffer.data[0];
-    for (uint8_t i = 0; i < standardServicesListSize; i++) {
-        if (standardServicesList[i].serviceId == serviceId && standardServicesList[i].postResponseHandler) {
-            return standardServicesList[i].postResponseHandler(reqBuf, respBuf);
-        }
+    switch (serviceId) {
+    case SERVICE_ID_11:
+        Service11_Post_Handler(reqBuf, respBuf);
+        break;
+    case SERVICE_ID_31:
+        Service31_Post_Handler(reqBuf, respBuf);
+        break;
+    default:
+        break;
     }
 }
 
@@ -111,13 +84,13 @@ void Uds_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const respBu
     Uds_Buffer_Clear(&respBuf->buffer);
     Uds_Request_Handler(reqBuf, respBuf);
     if (&respBuf->buffer.length > 0U) {
-        Uds_Gateway_Configurations.send(respBuf->buffer.data, respBuf->buffer.length);
+        config->send(respBuf->buffer.data, respBuf->buffer.length);
     }
     Uds_Request_Post_Handler(reqBuf, respBuf);
 }
 
 bool Uds_Engine() {
-    Uds_Request_Buffer.buffer.length = Uds_Gateway_Configurations.receive(Uds_Request_Buffer.buffer.data);
+    Uds_Request_Buffer.buffer.length = config->receive(Uds_Request_Buffer.buffer.data);
     if (Uds_Request_Buffer.buffer.length > 0U) {
         Uds_Handler(&Uds_Request_Buffer, &Uds_Response_Buffer);
         return true;
@@ -127,9 +100,7 @@ bool Uds_Engine() {
 
 void Uds_Periodic_Task(const uint32_t elapsedMs) { Service10_Periodic_Handler(elapsedMs); }
 
-void Uds_Send_Response(UDS_Response_T const *const response) {
-    Uds_Gateway_Configurations.send(response->buffer.data, response->buffer.length);
-}
+void Uds_Send_Response(UDS_Response_T const *const response) { config->send(response->buffer.data, response->buffer.length); }
 
 void Uds_Inject_Request(uint8_t const *const request, uint16_t length, bool isFunctionalRequest) {
     Uds_Buffer_Clear(&Uds_Request_Buffer.buffer);
@@ -138,4 +109,20 @@ void Uds_Inject_Request(uint8_t const *const request, uint16_t length, bool isFu
         Uds_Buffer_Push_Uint8(&Uds_Request_Buffer.buffer, request[i]);
     }
     Uds_Handler(&Uds_Request_Buffer, &Uds_Response_Buffer);
+}
+
+void Uds_Init(Uds_Config_T const *const newConfig) {
+    config = newConfig;
+    Service10_Init(newConfig->services.service10);
+    Service11_Init(newConfig->services.service11);
+    Service22_Init(newConfig->services.service22);
+    Service27_Init(newConfig->services.service27);
+    Service28_Init(newConfig->services.service28);
+    Service2E_Init(newConfig->services.service2E);
+    Service31_Init(newConfig->services.service31);
+    Service34_Init(newConfig->services.service34);
+    Service36_Init(newConfig->services.service36);
+    Service37_Init(newConfig->services.service37);
+    Service3E_Init(newConfig->services.service3E);
+    Service85_Init(newConfig->services.service85);
 }

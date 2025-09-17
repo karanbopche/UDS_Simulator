@@ -2,9 +2,14 @@
 
 #include "UdsServices/Service3E.h"
 #include "UdsServices/Service10.h"
+#include "UdsServices/Service3E_Config.h"
+#include "UdsServices/Utils/Uds_Nrcs.h"
+
+static Service3E_Config_T const *config;
+
+void Service3E_Init(Service3E_Config_T const *const newConfig) { config = newConfig; }
 
 void Service3E_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const respBuf) {
-    Service3E_Config_T const *const config = Uds_Gateway_Configurations.services.service3E;
     if (config == NULL || (reqBuf->isFunctionalRequest && !config->isFunctionalAddressSupported)) {
         return Uds_Fill_Nrc(&respBuf->buffer, reqBuf->buffer.data[0], NRC_SERVICE_NOT_SUPPORTED);
     }

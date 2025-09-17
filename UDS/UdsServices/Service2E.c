@@ -1,7 +1,12 @@
 #include "UdsServices/Service2E.h"
+#include "UdsServices/Service2E_Config.h"
+#include "UdsServices/Utils/Uds_Nrcs.h"
+
+static Service2E_Config_T const *config;
+
+void Service2E_Init(Service2E_Config_T const *const newConfig) { config = newConfig; }
 
 void Service2E_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const respBuf) {
-    Service2E_Config_T const *const config = Uds_Gateway_Configurations.services.service2E;
     if (config == NULL || (reqBuf->isFunctionalRequest && !config->isFunctionalAddressSupported)) {
         return Uds_Fill_Nrc(&respBuf->buffer, reqBuf->buffer.data[0], NRC_SERVICE_NOT_SUPPORTED);
     }

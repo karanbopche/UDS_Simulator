@@ -1,4 +1,4 @@
-#include "UdsServices/Service85.h"
+#include "UdsServices/Service85_Config.h"
 
 const Service85_Config_T service85Config = {
     .isFunctionalAddressSupported = true,

@@ -1,4 +1,4 @@
-#include "UdsServices/Service28.h"
+#include "UdsServices/Service28_Config.h"
 
 const Service28_Config_T service28Config = {
     .isFunctionalAddressSupported = false,

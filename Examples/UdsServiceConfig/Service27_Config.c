@@ -1,4 +1,4 @@
-#include "UdsServices/Service27.h"
+#include "UdsServices/Service27_Config.h"
 
 static void SubFunction_03_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const respBuf,
                                    uint16_t *currentSecuriyLevel);

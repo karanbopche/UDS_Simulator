@@ -1,12 +1,16 @@
 
 
 #include "UdsServices/Service37.h"
-#include "UdsGateway_Configuration.h"
+#include "UdsServices/Service37_Config.h"
+#include "UdsServices/Utils/Uds_Download_Context.h"
+#include "UdsServices/Utils/Uds_Nrcs.h"
 
 extern Uds_Transfer_Data_Request_T transferRequest;
+static Service37_Config_T const *config;
+
+void Service37_Init(Service37_Config_T const *const newConfig) { config = newConfig; }
 
 void Service37_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const respBuf) {
-    Service37_Config_T const *const config = Uds_Gateway_Configurations.services.service37;
     if (config == NULL || (reqBuf->isFunctionalRequest && !config->isFunctionalAddressSupported)) {
         return Uds_Fill_Nrc(&respBuf->buffer, reqBuf->buffer.data[0], NRC_SERVICE_NOT_SUPPORTED);
     }
@@ -18,8 +22,8 @@ void Service37_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const 
     } else if (transferRequest.bytesTransfered != transferRequest.transferSize) {
         return Uds_Fill_Nrc(&respBuf->buffer, reqBuf->buffer.data[0], NRC_CONDITIONS_NOT_CORRECT);
     }
-    if (Uds_Gateway_Configurations.services.service37->tranferCompleteCallback) {
-        Uds_Gateway_Configurations.services.service37->tranferCompleteCallback();
+    if (config->tranferCompleteCallback) {
+        config->tranferCompleteCallback();
     }
     Stop_Uds_Transfer(&transferRequest);
     Uds_Buffer_Clear(&respBuf->buffer);

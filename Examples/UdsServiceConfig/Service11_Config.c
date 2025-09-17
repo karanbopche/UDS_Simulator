@@ -1,4 +1,4 @@
-#include "UdsServices/Service11.h"
+#include "UdsServices/Service11_Config.h"
 
 static void Service11_SubFunction_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const respBuf);
 static void Service11_SubFunction_Post_Handler(void);

@@ -1,11 +1,16 @@
 
 
 #include "UdsServices/Service34.h"
+#include "UdsServices/Service34_Config.h"
+#include "UdsServices/Utils/Uds_Download_Context.h"
+#include "UdsServices/Utils/Uds_Nrcs.h"
 
 Uds_Transfer_Data_Request_T transferRequest;
+static Service34_Config_T const *config;
+
+void Service34_Init(Service34_Config_T const *const newConfig) { config = newConfig; }
 
 void Service34_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const respBuf) {
-    Service34_Config_T const *const config = Uds_Gateway_Configurations.services.service34;
     if (config == NULL || (reqBuf->isFunctionalRequest && !config->isFunctionalAddressSupported)) {
         return Uds_Fill_Nrc(&respBuf->buffer, reqBuf->buffer.data[0], NRC_SERVICE_NOT_SUPPORTED);
     }
@@ -20,8 +25,7 @@ void Service34_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const 
     }
     const uintptr_t address = Fetch_uint32(&reqBuf->buffer.data[3]);
     const uintptr_t size = Fetch_uint32(&reqBuf->buffer.data[7]);
-    if (Uds_Gateway_Configurations.services.service34->preconditions &&
-        !Uds_Gateway_Configurations.services.service34->preconditions(reqBuf, respBuf)) {
+    if (config->preconditions && !config->preconditions(reqBuf, respBuf)) {
         return;
     }
     Initiate_Uds_Download(&transferRequest, address, size);

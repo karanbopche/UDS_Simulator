@@ -1,4 +1,4 @@
-#include "UdsServices/Service10.h"
+#include "UdsServices/Service10_Config.h"
 
 const Service10_Config_T service10Config = {
     .isFunctionalAddressSupported = false,

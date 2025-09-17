@@ -5,14 +5,10 @@
 extern "C" {
 #endif
 
-#include "UdsGateway_Configuration.h"
+#include "UdsServices/Service10_Config.h"
+#include "UdsServices/Utils/Uds_Buffers.h"
 
-typedef enum Service10_Session_Tag {
-    SERVICE_10_DEFAULT_SESSION = 0x01,
-    SERVICE_10_PROGRAMMING_SESSION = 0x02,
-    SERVICE_10_EXTENDED_SESSION = 0x03,
-} Service10_Session_T;
-
+void Service10_Init(Service10_Config_T const *const config);
 void Service10_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const respBuf);
 void Service10_Session_Timer_Reset();
 void Service10_Periodic_Handler(const uint32_t elapsedMs);

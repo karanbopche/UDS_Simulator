@@ -1,4 +1,5 @@
-#include "UdsServices/Service2E.h"
+#include "UdsServices/Service2E_Config.h"
+#include "UdsServices/Utils/Uds_Nrcs.h"
 
 static void Service2E_F199_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const respBuf);
 

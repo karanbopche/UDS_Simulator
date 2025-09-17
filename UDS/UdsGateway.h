@@ -6,7 +6,9 @@ extern "C" {
 #endif
 
 #include "UdsGateway_Configuration.h"
+#include "UdsServices/Utils/Uds_Buffers.h"
 
+void Uds_Init(Uds_Config_T const *const config);
 void Uds_Request_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const respBuf);
 void Uds_Send_Response(UDS_Response_T const *const buffer);
 void Uds_Periodic_Task(const uint32_t elapsedMs);

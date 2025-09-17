@@ -1,6 +1,4 @@
-
-
-#include "UdsServices/Service22.h"
+#include "UdsServices/Service22_Config.h"
 
 static void Did_F188_Handler(UDS_Buffer_T *const resultBuffer);
 static void Did_F199_Handler(UDS_Buffer_T *const resultBuffer);

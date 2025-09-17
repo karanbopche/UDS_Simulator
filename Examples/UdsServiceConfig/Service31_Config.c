@@ -1,4 +1,5 @@
-#include "UdsServices/Service31.h"
+#include "UdsServices/Service31_Config.h"
+#include "UdsServices/Utils/Uds_Nrcs.h"
 
 static void Service31_FF01_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const respBuf);
 static void Service31_0202_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const respBuf);

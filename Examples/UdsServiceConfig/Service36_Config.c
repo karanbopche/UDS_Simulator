@@ -1,4 +1,4 @@
-#include "UdsServices/Service36.h"
+#include "UdsServices/Service36_Config.h"
 #include <string.h>
 
 static uint32_t readMemory(const void *address, void *const data, const uint32_t size);

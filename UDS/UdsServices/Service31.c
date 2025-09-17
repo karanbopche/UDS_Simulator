@@ -1,9 +1,14 @@
 
 
 #include "UdsServices/Service31.h"
+#include "UdsServices/Service31_Config.h"
+#include "UdsServices/Utils/Uds_Nrcs.h"
+
+static Service31_Config_T const *config;
+
+void Service31_Init(Service31_Config_T const *const newConfig) { config = newConfig; }
 
 void Service31_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const respBuf) {
-    Service31_Config_T const *const config = Uds_Gateway_Configurations.services.service31;
     if (config == NULL || (reqBuf->isFunctionalRequest && !config->isFunctionalAddressSupported)) {
         return Uds_Fill_Nrc(&respBuf->buffer, reqBuf->buffer.data[0], NRC_SERVICE_NOT_SUPPORTED);
     }
@@ -25,7 +30,6 @@ void Service31_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const 
 }
 
 void Service31_Post_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const respBuf) {
-    Service31_Config_T const *const config = Uds_Gateway_Configurations.services.service31;
     const uint16_t routineId = Fetch_uint16(&reqBuf->buffer.data[2]);
     if (config == NULL || (reqBuf->isFunctionalRequest && !config->isFunctionalAddressSupported)) {
         return;

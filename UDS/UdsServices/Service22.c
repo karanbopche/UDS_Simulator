@@ -1,10 +1,14 @@
 
 
 #include "UdsServices/Service22.h"
+#include "UdsServices/Service22_Config.h"
+#include "UdsServices/Utils/Uds_Nrcs.h"
+
+static Service22_Config_T const *config;
+
+void Service22_Init(Service22_Config_T const *const newConfig) { config = newConfig; }
 
 void Service22_Handler(UDS_Request_T const *const reqBuf, UDS_Response_T *const respBuf) {
-    Service22_Config_T const *const config = Uds_Gateway_Configurations.services.service22;
-
     if (config == NULL || (reqBuf->isFunctionalRequest && !config->isFunctionalAddressSupported)) {
         return Uds_Fill_Nrc(&respBuf->buffer, reqBuf->buffer.data[0], NRC_SERVICE_NOT_SUPPORTED);
     }
